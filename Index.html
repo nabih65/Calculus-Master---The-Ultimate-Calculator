@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculus Master - The Ultimate Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+            color: #fff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .header {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #1a202c;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+        .selection-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .selection-container select, .selection-container button {
+            font-size: 16px;
+            padding: 12px;
+            width: 300px;
+            cursor: pointer;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            transition: background 0.3s ease;
+        }
+        .selection-container select:hover, .selection-container button:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .languages-select {
+            width: 300px;
+            margin: 20px 0;
+        }
+        .info {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333;
+        }
+        .info p {
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        /* Background with dynamic math-related imagery */
+        .background-images {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/a/a0/Mathematical_Symbols.svg'); /* Math symbols */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(5px);
+            animation: backgroundAnimation 20s infinite linear;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background-position: center top; }
+            25% { background-position: center center; }
+            50% { background-position: center bottom; }
+            75% { background-position: center top; }
+            100% { background-position: center top; }
+        }
+
+        /* Floating shapes with math symbols and animation */
+        .floating-shapes {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+            animation: floatShapes 15s infinite ease-in-out;
+        }
+
+        @keyframes floatShapes {
+            0% { transform: translate(-50%, 10%); }
+            50% { transform: translate(-50%, -10%); }
+            100% { transform: translate(-50%, 10%); }
+        }
+
+        /* Hover effects for buttons */
+        .selection-container button {
+            background-color: #1e90ff;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .selection-container button:active {
+            background-color: #007acc;
+        }
+
+        .selection-container button:hover {
+            background-color: #005a99;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="background-images"></div>
+    <div class="floating-shapes">
+        <svg width="150" height="150" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="40" stroke="white" stroke-width="4" fill="transparent"/>
+            <path d="M 50 10 Q 65 20, 50 40 T 50 70" stroke="white" fill="transparent" stroke-width="2"/>
+        </svg>
+    </div>
+
+    <div class="container">
+        <div class="header" id="app-title">Calculus Master - The Ultimate Calculator</div>
+
+        <div class="selection-container">
+            <label for="languages-select" id="language-label">Select Language:</label>
+            <select id="languages-select">
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+                <option value="ar">العربية</option>
+                <option value="zh">中文</option>
+                <option value="ru">Русский</option>
+                <option value="pt">Português</option>
+                <option value="it">Italiano</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="hi">हिन्दी</option>
+            </select>
+
+            <label for="mode-select" id="mode-label">Select Mode:</label>
+            <select id="mode-select">
+                <option value="normal">Normal Calculator</option>
+                <option value="scientific">Scientific Calculator</option>
+                <option value="graph">Graphing Calculator</option>
+            </select>
+
+            <button id="enter-btn">Enter</button>
+        </div>
+
+        <div class="info">
+            <p id="developer-info">This program is designed for public benefit by developer Adjou Abderrahim.</p>
+        </div>
+    </div>
+
+    <script>
+        // Language options
+        const languages = {
+            en: {
+                appTitle: "Calculus Master - The Ultimate Calculator",
+                languageLabel: "Select Language:",
+                modeLabel: "Select Mode:",
+                developerInfo: "This program is designed for public benefit by developer Adjou Abderrahim."
+            },
+            fr: {
+                appTitle: "Calculatrice Maître - La Calculatrice Ultime",
+                languageLabel: "Sélectionner la langue :",
+                modeLabel: "Sélectionner le mode :",
+                developerInfo: "Ce programme est conçu pour le bénéfice public par le développeur Adjou Abderrahim."
+            },
+            es: {
+                appTitle: "Maestro de Cálculo - La Calculadora Definitiva",
+                languageLabel: "Seleccionar idioma:",
+                modeLabel: "Seleccionar modo:",
+                developerInfo: "Este programa está diseñado para el beneficio público por el desarrollador Adjou Abderrahim."
+            },
+            ar: {
+                appTitle: "ماجستير في الرياضيات - الآلة الحاسبة النهائية",
+                languageLabel: "اختار اللغة:",
+                modeLabel: "اختار الوضع:",
+                developerInfo: "تم تصميم هذا البرنامج لصالح الجمهور بواسطة المطور عجو عبد الرحيم."
+            },
+            zh: {
+                appTitle: "微积分大师 - 终极计算器",
+                languageLabel: "选择语言：",
+                modeLabel: "选择模式：",
+                developerInfo: "该程序由开发者 Adjou Abderrahim 为公众利益设计。"
+            },
+            ru: {
+                appTitle: "Мастер Калькулятора - Окончательный Калькулятор",
+                languageLabel: "Выберите язык:",
+                modeLabel: "Выберите режим:",
+                developerInfo: "Эта программа разработана для общественного блага разработчиком Adjou Abderrahim."
+            },
+            pt: {
+                appTitle: "Mestre do Cálculo - A Calculadora Final",
+                languageLabel: "Selecionar idioma:",
+                modeLabel: "Selecionar modo:",
+                developerInfo: "Este programa foi projetado para o benefício público pelo desenvolvedor Adjou Abderrahim."
+            },
+            it: {
+                appTitle: "Maestro di Calcolo - La Calcolatrice Definitiva",
+                languageLabel: "Seleziona lingua:",
+                modeLabel: "Seleziona modalità:",
+                developerInfo: "Questo programma è stato progettato per il beneficio pubblico dal sviluppatore Adjou Abderrahim."
+            },
+            ja: {
+                appTitle: "計算マスター - 究極の計算機",
+                languageLabel: "言語を選択:",
+                modeLabel: "モードを選択:",
+                developerInfo: "このプログラムは、開発者Adjou Abderrahimによって公共の利益のために設計されています。"
+            },
+            ko: {
+                appTitle: "계산기 마스터 - 궁극적인 계산기",
+                languageLabel: "언어 선택:",
+                modeLabel: "모드 선택:",
+                developerInfo: "이 프로그램은 개발자 Adjou Abderrahim이 공공의 이익을 위해 설계했습니다."
+            },
+            hi: {
+                appTitle: "कैलकुलस मास्टर - अंतिम कैलकुलेटर",
+                languageLabel: "भाषा चुनें:",
+                modeLabel: "मोड चुनें:",
+                developerInfo: "यह कार्यक्रम सार्वजनिक लाभ के लिए विकासक Adjou Abderrahim द्वारा डिजाइन किया गया है।"
+            },
+        };
+
+        // Function to change the language of the page
+        function changeLanguage(language) {
+            document.getElementById("app-title").textContent = languages[language].appTitle;
+            document.getElementById("language-label").textContent = languages[language].languageLabel;
+            document.getElementById("mode-label").textContent = languages[language].modeLabel;
+            document.getElementById("developer-info").textContent = languages[language].developerInfo;
+        }
+
+        // When language is changed
+        document.getElementById("languages-select").addEventListener("change", function() {
+            let selectedLang = this.value;
+            localStorage.setItem("language", selectedLang); // Save selected language
+            changeLanguage(selectedLang); // Change page language
+        });
+
+        // On page load, check if language is set in localStorage
+        window.onload = function() {
+            let savedLang = localStorage.getItem("language") || "en"; // Default to English if no language is saved
+            document.getElementById("languages-select").value = savedLang; // Set saved language in the select dropdown
+            changeLanguage(savedLang); // Change page language
+        };
+
+        // Redirect based on mode selection
+        document.getElementById("enter-btn").addEventListener("click", function() {
+            const mode = document.getElementById("mode-select").value;
+            if (mode === "normal") {
+                window.location.href = "normal_calculator.html";  // Normal calculator page
+            } else if (mode === "scientific") {
+                window.location.href = "scientific_calculator.html";  // Scientific calculator page
+            } else if (mode === "graph") {
+                window.location.href = "graph_calculator.html";  // Graph calculator page
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+

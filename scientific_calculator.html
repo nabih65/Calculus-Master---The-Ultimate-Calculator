@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scientific Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .calculator {
+      width: 350px;
+      padding: 20px;
+      background-color: #1e1e1e;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    }
+    .display {
+      background-color: #000;
+      color: #0f0;
+      padding: 20px;
+      font-size: 2rem;
+      text-align: right;
+      border-radius: 10px;
+      min-height: 60px;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    button {
+      padding: 20px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 10px;
+      background-color: #2b2b2b;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #444;
+    }
+    button:active {
+      background-color: #666;
+    }
+    .highlight {
+      background-color: #00c896;
+    }
+    .wide {
+      grid-column: span 2;
+    }
+    .functions button {
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <!-- First Row -->
+      <button>AC</button>
+      <button>DEL</button>
+      <button>MODE</button>
+      <button>Ans</button>
+      <button>√</button>
+      
+      <!-- Second Row -->
+      <button>sin</button>
+      <button>cos</button>
+      <button>tan</button>
+      <button>log</button>
+      <button>ln</button>
+      
+      <!-- Third Row -->
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button>/</button>
+      <button>x²</button>
+      
+      <!-- Fourth Row -->
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button>*</button>
+      <button>x⁻¹</button>
+      
+      <!-- Fifth Row -->
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>-</button>
+      <button>(</button>
+      
+      <!-- Sixth Row -->
+      <button>0</button>
+      <button>.</button>
+      <button class="wide">=</button>
+      <button>+</button>
+      <button>)</button>
+
+      <!-- Scientific Functions -->
+      <button>n!</button>
+      <button>∫</button>
+      <button>∑</button>
+      <button>lim</button>
+      <button>abs</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+    const buttons = document.querySelectorAll('button');
+    let currentInput = '';
+
+    // Normal button presses
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const val = btn.textContent;
+        if (val === '=') {
+          try {
+            currentInput = eval(currentInput).toString();
+          } catch (e) {
+            currentInput = 'Error';
+          }
+        } else if (val === 'DEL') {
+          currentInput = currentInput.slice(0, -1);
+        } else if (val === 'AC') {
+          currentInput = '';
+        } else {
+          currentInput += val;
+        }
+        display.textContent = currentInput || '0';
+      });
+    });
+
+    // Handle scientific functions
+    document.getElementById('sin').addEventListener('click', () => {
+      currentInput += 'Math.sin(';
+      display.textContent = currentInput;
+    });
+
+    document.getElementById('cos').addEventListener('click', () => {
+      currentInput += 'Math.cos(';
+      display.textContent = currentInput;
+    });
+
+    document.getElementById('tan').addEventListener('click', () => {
+      currentInput += 'Math.tan(';
+      display.textContent = currentInput;
+    });
+
+    document.getElementById('log').addEventListener('click', () => {
+      currentInput += 'Math.log10(';
+      display.textContent = currentInput;
+    });
+
+    document.getElementById('ln').addEventListener('click', () => {
+      currentInput += 'Math.log(';
+      display.textContent = currentInput;
+    });
+
+    document.getElementById('√').addEventListener('click', () => {
+      currentInput += 'Math.sqrt(';
+      display.textContent = currentInput;
+    });
+
+    document.getElementById('n!').addEventListener('click', () => {
+      currentInput += 'factorial(';
+      display.textContent = currentInput;
+    });
+
+    document.getElementById('∫').addEventListener('click', () => {
+      currentInput += 'integral(';
+      display.textContent = currentInput;
+    });
+
+    document.getElementById('∑').addEventListener('click', () => {
+      currentInput += 'sum(';
+      display.textContent = currentInput;
+    });
+
+    document.getElementById('lim').addEventListener('click', () => {
+      currentInput += 'limit(';
+      display.textContent = currentInput;
+    });
+
+    document.getElementById('abs').addEventListener('click', () => {
+      currentInput += 'Math.abs(';
+      display.textContent = currentInput;
+    });
+  </script>
+</body>
+</html>
